@@ -1,0 +1,302 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "\\about\nshow DATABASES;\n\nCREATE DATABASE boat_reservations;\n\nuse boat_reservations;\n\n-- Sailors table\nCREATE TABLE SAILORS (\n    sid INT NOT NULL PRIMARY KEY,\n    sname VARCHAR(50),\n    rating INT,\n    age INT\n);\n\n-- Boats table\nCREATE TABLE BOATS (\n    bid INT NOT NULL PRIMARY KEY,\n    bname VARCHAR(50),\n    color VARCHAR(20)\n);\n\n-- Reserves TABLE\nCREATE TABLE RESERVES (\n    sid INT,\n    bid INT,\n    sdate DATE,\n    FOREIGN KEY (sid) REFERENCES sailors(sid) ON DELETE CASCADE,\n    FOREIGN KEY (bid) REFERENCES boats(bid) ON DELETE CASCADE \n);\n\n-- SAMPLE DATA \nINSERT INTO Sailors (sid, sname, rating, age)\nVALUES\n    (22, 'Dustin', 7, 45.0),\n    (29, 'Brutus', 1, 33.0),\n    (31, 'Lubber', 8, 55.5),\n    (32, 'Andy', 8, 25.5),\n    (58, 'Rusty', 10, 35.0),\n    (64, 'Horatio', 7, 35.0),\n    (71, 'Zorba', 10, 16.0),\n    (74, 'Horatio', 9, 35.0),\n    (85, 'Art', 3, 25.5),\n    (95, 'Bob', 3, 63.5);\n\nINSERT INTO Boats (bid, bname, color)\nVALUES\n    (101, 'Interlake', 'blue'),\n    (102, 'Interlake', 'red'),\n    (103, 'Clipper', 'green'),\n    (104, 'Marine', 'red');\n\nINSERT INTO Reserves (sid, bid, sdate)\nVALUES\n    (22, 101, '1998-10-10'),\n    (22, 102, '1998-10-10'),\n    (22, 104, '1998-10-08'),\n    (22, 103, '1998-10-07'),\n    (31, 102, '1998-11-10'),\n    (31, 103, '1998-11-06'),\n    (31, 104, '1998-11-12'),\n    (64, 101, '1998-09-05'),\n    (64, 102, '1998-09-08'),\n    (74, 103, '1998-09-08');\n\n-- i)Fetch the names and ages of sailors with a rating of 8.\nSELECT sname,age\nFROM sailors\nWHERE rating=8;\n\n-- ii)Obtain Count of the total number of boats.\nSELECT COUNT(*) AS total_boats\nFROM BOATS;\n\n-- iii) Fetch the average age of all sailors.\nSELECT AVG(age) as avg_age\nFROM sailors;\n\n-- iv) Retrieve the names of sailors who reserved a boat on a specific date.\nSELECT DISTINCT S.sname\nFROM sailors S\nJOIN RESERVES R ON S.sid=R.sid\nWHERE R.sdate='1998-11-06';\n\n-- v) Identify Count the number of sailors for each rating.\nSELECT rating, COUNT(*) as sailor_count\nfrom sailors\nGROUP BY rating;\n\n-- vi) Fetch the oldest sailor.\nSELECT age\nFROM sailors\nORDER BY age DESC\nLimit 1;\n\n-- vii) Check the names of boats reserved on a specific date.\nSELECT DISTINCT B.bname\nFROM boats B \nJOIN reserves R on R.bid=B.bid\nwhere sdate='1998-10-08';\n\n-- viii) Evaluate the average age of sailors who reserved a boat on a specific date.\nSELECT AVG(S.age) as avg_age\nFROM sailors S \nJOIN reserves R on R.sid=S.sid\nWHERE sdate = '1998-11-12';\n\n-- ix) Check the boats that have not been reserved.\nSELECT bname FROM BOATS WHERE bid NOT IN (SELECT DISTINCT bid FROM RESERVES);\n\n-- x)Summarize the names of sailors who have reserved a boat of a specific color\nSELECT DISTINCT S.sname\nFROM sailors S \nJOIN reserves R ON R.sid=S.sid\nJOIN boats B on R.bid=B.bid\nWHERE B.color='red';",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 113,
+                    "column": 16
+                },
+                "position": {
+                    "lineNumber": 113,
+                    "column": 16
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 104,
+                "column": 1
+            },
+            "firstPositionDeltaTop": -2
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "content": "Welcome to the MySQL Shell - DB Notebook.\n\nPress Ctrl+Enter to execute the code block.\n\nExecute \\sql to switch to SQL, \\js to JavaScript and \\ts to TypeScript mode.\nExecute \\help or \\? for help;",
+                            "language": "ansi"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 6
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 116,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "aa578004-715a-4c87-f368-86b5f0f89e3f"
+                    ]
+                },
+                "currentHeight": 351.984375,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 15
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 15,
+                            "length": 36
+                        },
+                        "contentStart": 17,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 51,
+                            "length": 24
+                        },
+                        "contentStart": 53,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 75,
+                            "length": 129
+                        },
+                        "contentStart": 94,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 204,
+                            "length": 119
+                        },
+                        "contentStart": 221,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 323,
+                            "length": 216
+                        },
+                        "contentStart": 343,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 539,
+                            "length": 354
+                        },
+                        "contentStart": 557,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 893,
+                            "length": 168
+                        },
+                        "contentStart": 895,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1061,
+                            "length": 337
+                        },
+                        "contentStart": 1063,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1398,
+                            "length": 108
+                        },
+                        "contentStart": 1461,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1506,
+                            "length": 93
+                        },
+                        "contentStart": 1557,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1599,
+                            "length": 88
+                        },
+                        "contentStart": 1647,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1687,
+                            "length": 176
+                        },
+                        "contentStart": 1766,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1863,
+                            "length": 131
+                        },
+                        "contentStart": 1925,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1994,
+                            "length": 84
+                        },
+                        "contentStart": 2028,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2078,
+                            "length": 158
+                        },
+                        "contentStart": 2142,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2236,
+                            "length": 190
+                        },
+                        "contentStart": 2323,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2426,
+                            "length": 131
+                        },
+                        "contentStart": 2480,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2557,
+                            "length": 202
+                        },
+                        "contentStart": 2640,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2759,
+                            "length": 0
+                        },
+                        "contentStart": 2758,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "456ca496-d291-4b6e-9a68-7079b11cc6da",
+                    "resultId": "aa578004-715a-4c87-f368-86b5f0f89e3f",
+                    "rows": [
+                        {
+                            "0": "Dustin"
+                        },
+                        {
+                            "0": "Lubber"
+                        },
+                        {
+                            "0": "Horatio"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "sname",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17
+                            }
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 0.982ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 18,
+                    "sql": "\n\n-- x)Summarize the names of sailors who have reserved a boat of a specific color\nSELECT DISTINCT S.sname\nFROM sailors S \nJOIN reserves R ON R.sid=S.sid\nJOIN boats B on R.bid=B.bid\nWHERE B.color='red';"
+                }
+            ]
+        }
+    ]
+}
