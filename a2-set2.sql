@@ -1,4 +1,4 @@
-lshow DATABASES;
+SHOW DATABASES;
 
 CREATE DATABASE boat_reservations;
 
